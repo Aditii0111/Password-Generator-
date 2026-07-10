@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Password Generator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        <i class="fa-solid fa-lock"></i>
+        Password Generator
+    </h1>
+
+    <form method="POST">
+
+        <label>Password Length</label>
+
+        <div class="slider-box">
+
+            <input
+                type="range"
+                name="length"
+                min="4"
+                max="30"
+                value="12"
+                id="length">
+
+            <span id="lengthValue">12</span>
+
+        </div>
+
+        <h3>Character Types</h3>
+
+        <div class="options">
+
+            <label>
+                <input type="checkbox"
+                       name="uppercase"
+                       checked>
+                Uppercase
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="lowercase"
+                       checked>
+                Lowercase
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="numbers"
+                       checked>
+                Numbers
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="symbols"
+                       checked>
+                Symbols
+            </label>
+
+        </div>
+
+        <button type="submit">
+            Generate Password
+        </button>
+
+        <button onclick="location.reload()">
+🔄 Regenerate
+</button>
+
+
+
+<button type="button" id="themeBtn">
+🌙 Theme
+</button>
+
+
+    </form>
+
+    {% if password %}
+
+    <div class="result">
+
+        <h2>Your Password</h2>
+
+        <div id="password" class="password-box">
+            {{ password }}
+        </div>
+
+        <button class="copy-btn"
+                onclick="copyPassword()">
+            📋 Copy Password
+        </button>
+
+        <h3>
+            Strength :
+            <span class="{{ strength|lower }}">
+                {{ strength }}
+            </span>
+        </h3>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+let slider = document.getElementById("length");
+let output = document.getElementById("lengthValue");
+
+output.innerHTML = slider.value;
+
+slider.oninput = function () {
+    output.innerHTML = this.value;
+}
+
+function copyPassword() {
+
+    let text =
+    document.getElementById("password").innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Password Copied!");
+}
+document.getElementById("themeBtn")
+.addEventListener("click", function(e){
+    e.preventDefault();
+    document.body.classList.toggle("light");
+});
+
+</script>
+
+</body>
+</html>
